@@ -1,0 +1,151 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>O Peso dos Números - IPC</title>
+
+    <!-- JS -->
+    <script type="text/javascript" src="js/main.js"></script>
+    <script type="text/javascript" src="js/paper.js"></script>
+    <script type="text/paperscript" src="js/PesoNumeros.js" canvas="renderCanvas"></script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="PesoNumeros.css">
+
+    <!-- This is the favicon -->
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+</head>
+<body class="container">
+
+<!-- NAVBAR -->
+<nav class=" navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="index.html">Peso dos Números</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <button onclick="PesoNumeros.newTotal();" type="button"
+                    class="btn navbar-btn btn-outline-info text-left mr-1 mt-1">
+                Novo Jogo
+            </button>
+            <button onclick="PesoNumeros.clearPan();" type="button"
+                    class="btn navbar-btn btn-outline-info text-left mr-1 mt-1">
+                Limpar Balança
+            </button>
+            <button type="button" class="btn navbar-btn btn-outline-info text-left mr-1 mt-1" data-toggle="modal"
+                    data-target="#sobreModal">
+                Como Jogar
+            </button>
+            <select id="level" onchange="PesoNumeros.setLevel();"
+                    class="btn navbar-btn btn-outline-info text-left mr-1 mt-1"
+                    onchange="PesoNumeros.setLevel();">
+                <option selected value="0">Iniciante</option>
+                <option value="1">Intermédio</option>
+                <option value="2">Avançado</option>
+                <optgroup label="Para especialistas">
+                    <option value="100">Sem repetir</option>
+                    <option value="200">Sempre a mesma</option>
+                </optgroup>
+            </select>
+        </ul>
+        <span class="navbar-text">Um jogo de matemática para crianças</span>
+    </div>
+</nav>
+
+<!-- SOBRE Modal -->
+<div class="modal fade" id="sobreModal" tabindex="-1" role="dialog" aria-labelledby="sobreModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="sobreModalLabel">Como Jogar</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <ul>
+                    <li>Seleciona uma fruta clicando nela (ou arrastando e soltando-a na balança).</li>
+                    <li>Continua adicionando fruta até que a escala esteja equilibrada.</li>
+                    <li>
+                        Se adicionas-te peso a mais, podes remover qualquer fruta da sua balança clicando nela (ou
+                        arrastando e soltando-a).
+                    </li>
+                    <li>Quando a escala estiver equilibrada, poderás ver a equação que crias-te!</li>
+                </ul>
+                <h2>Níveis</h2>
+                <ul>
+                    <li>Iniciante - o total será entre 1 e 20.</li>
+                    <li>Intermédio - o total será entre 21 e 40.</li>
+                    <li>Avançado - o total estará entre 41 e 60.</li>
+                </ul>
+                <button type="button" class="btn navbar-btn btn-outline-info text-left mr-1 mt-1" data-toggle="modal"
+                        data-target="#expertModal" data-dismiss="modal">
+                    Desafios para especialistas
+                </button>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- EXPERT Modal -->
+<div class="modal fade" id="expertModal" tabindex="-1" role="dialog" aria-labelledby="expertModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="expertModalLabel">Desafios para especialistas</h5>
+                <button type="button" class="close" aria-label="Close" data-toggle="modal"
+                    data-target="#sobreModal" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <ul>
+                    <li>
+                        Sem repetir - o total estará entre 1 e 55, inclusive. Você pode selecionar
+                        qualquer fruta, mas cada fruta só pode ser colocada no prato da balança uma vez.
+                    </li>
+                    </br>
+                    <li>
+                        Sempre a mesma - o total será um produto (número composto, também conhecido como sem
+                        primos) entre 2 e 60, inclusive. Você pode selecionar uma única fruta várias vezes e não
+                        pode selecionar nenhuma outra fruta.
+                    </li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" data-toggle="modal"
+                    data-target="#sobreModal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<canvas id="renderCanvas" width="1000px" height="710px"></canvas>
+<audio id="soundHandle" style="display: none;"></audio>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
+
+</body>
+</html>

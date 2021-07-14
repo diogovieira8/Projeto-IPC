@@ -1,0 +1,19 @@
+body {
+    background-color: #89CFF0;
+}
+
+#renderCanvas {
+    border: 1px solid lightgray;
+    border-radius: 10px;
+    background-color: white;
+    height: auto;
+	display: block;
+    margin-left: auto;
+    margin-right: auto;	
+}
+
+.navbar {
+    border: 1px solid lightgray;
+    border-radius: 10px;
+	margin-bottom: 5px;
+}
